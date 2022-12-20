@@ -1,9 +1,7 @@
 pipeline {
     agent {
-        docker {
-            image 'soyeb88/react-app:0.0.1.RELEASE'
-            args '-p 3000:3000'
-        }
+        image 'node:react-app:0.0.1.RELEASE'
+        args '-p 3000:3000'
     }
     environment {
         CI = 'true'
