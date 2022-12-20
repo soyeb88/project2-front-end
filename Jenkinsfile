@@ -1,9 +1,5 @@
 pipeline {
-    agent {
-        image 'node:react-app:0.0.1.RELEASE'
-        label 'my-defined-label'
-        args '-p 3000:3000'
-    }
+    agent any
     environment {
         CI = 'true'
     }
