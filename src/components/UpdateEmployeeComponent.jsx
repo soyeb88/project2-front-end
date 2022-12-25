@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import EmployeeService from '../services/EmployeeService';
 
-class CreateEmployeeComponent extends Component {
+class UpdateEmployeeComponent extends Component  {
+    
     constructor(props){
         super(props)
 
@@ -14,39 +15,30 @@ class CreateEmployeeComponent extends Component {
         }
         this.changeFirstNameHandler = this.changeFirstNameHandler.bind(this);
         this.changeLastNameHandler = this.changeLastNameHandler.bind(this);
-        //this.saveEmployee = this.saveEmployee.bind(this);
-
-        if(this.state.id === "-1"){
-            return 
-        }else{
-            EmployeeService.getEmployeeById(this.state.id).then((res)=>{
-                let employee = res.data;
-                this.setState({
-                    firstName: employee.firstName,
-                    lastName: employee.lastName,
-                    emailId: employee.emailId
-    
-                })
-            });
-        }
+        this.updateEmployee = this.updateEmployee.bind(this);
 
     }
 
-    saveEmployee = (event) => {
+    componentDidMount(){
+        EmployeeService.getEmployeeById(this.state.id).then((res)=>{
+            let employee = res.data;
+            this.setState({
+                firstName: employee.firstName,
+                lastName: employee.lastName,
+                emailId: employee.emailId
+
+            })
+        });
+    }
+
+    updateEmployee = (event) => {
         event.preventDefault();
         let employee = {firstName: this.state.firstName, lastName: this.state.lastName, emailId: this.state.emailId};
         console.log('employee =>' + JSON.stringify(employee));
-        
 
-        if(this.state.id === "-1"){
-            EmployeeService.createEmployee(employee).then(res =>{
-                this.props.navigate('/employee');
-            });
-        }else{
-            EmployeeService.updateEmployee(employee, this.state.id).then(res=>{
-                this.props.navigate('/employee');
-           });
-        }
+       EmployeeService.updateEmployee(employee, this.state.id).then(res=>{
+            this.props.navigate('/employee');
+       });
     }
 
     changeFirstNameHandler = (event) => {
@@ -61,14 +53,6 @@ class CreateEmployeeComponent extends Component {
         this.setState({emailId: event.target.value});
     }
 
-    changeTitle(){
-        if(this.state.id === "-1"){
-            return <h3 className="text-center">Add Employee</h3>
-        }
-        else{
-            return <h3 className="text-center">Update Employee</h3>
-        }
-    }
 
     render() {
         return (
@@ -76,7 +60,7 @@ class CreateEmployeeComponent extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="card col-md-6 offset-md-3 offset-md-3">
-                            {this.changeTitle()}
+                            <h3 className="text-center">Update Employee</h3>
                             <div className="card-body">
                                 <form>
                                     <div className="form-group">
@@ -95,7 +79,7 @@ class CreateEmployeeComponent extends Component {
                                         value={this.state.emailId} onChange={this.changeEamilIdHandler}/>
                                     </div>
 
-                                    <button className="btn btn-success" onClick={this.saveEmployee}>Save</button>
+                                    <button className="btn btn-success" onClick={this.updateEmployee}>Update</button>
                                     <button className="btn btn-danger" onClick={() => {
                                         this.props.navigate('/employee')}} style={{marginLeft: "10px"}}>Cancel</button>
                                 </form>
@@ -115,10 +99,5 @@ export const myParams = (WrappedComponent) => (props) => {
     return <WrappedComponent {...props} params={params} navigate={navigate} />;
 }
 
-/*
-function myParams(Component) {
-    return props => <Component navHook={useNavigate()} />;
-}
-*/
+export default myParams(UpdateEmployeeComponent);
 
-export default myParams(CreateEmployeeComponent);

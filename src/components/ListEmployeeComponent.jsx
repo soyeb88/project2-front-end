@@ -13,6 +13,8 @@ class ListEmployeeComponent extends Component {
         this.state ={
             employees:[]
         }
+
+        //this.deleteEmployee = this.deleteEmployee.bind(this);
     }
     
     componentDidMount(){
@@ -20,6 +22,13 @@ class ListEmployeeComponent extends Component {
             (res) => this.setState({employees: res.data})
         );
         
+    }
+
+    deleteEmployee(id){
+        EmployeeService.deleteEmployee(id).then( res => {
+            this.setState({employees: this.state.employees.filter(employee => employee.id !== id)});
+        })
+        console.log(id);
     }
 
     
@@ -30,7 +39,7 @@ class ListEmployeeComponent extends Component {
                 <h2 className="text-center">Employee List</h2>
                 <div className="row">
                     <button className="btn btn-primary" onClick={() => {
-                         this.props.navHook('/add-employee')
+                         this.props.navHook('/add-update-employee/-1')
                      }}>Add Employee</button>
                 </div>
                 <div className="row">
@@ -52,6 +61,14 @@ class ListEmployeeComponent extends Component {
                                         <td>{employee.firstName}</td>
                                         <td>{employee.lastName}</td>
                                         <td>{employee.emailId}</td>
+                                        <td>
+                                            <button onClick={() => { this.props.navHook(`/add-update-employee/${employee.id}`)
+                                                }} className="btn btn-info">Update</button>
+                                            <button style={{marginLeft:"10px"}} onClick={()=>this.deleteEmployee(employee.id)} 
+                                                className="btn btn-danger">Delete</button>
+                                            <button style={{marginLeft:"10px"}} onClick={() => { this.props.navHook(`/view-employee/${employee.id}`)
+                                                }} className="btn btn-info">View</button>
+                                        </td>
                                     </tr>
                                 )
                             }
