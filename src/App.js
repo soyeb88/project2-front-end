@@ -9,7 +9,10 @@ import ViewEmployeeCimponent from './components/ViewEmployeeCimponent';
 
 /*
 Video Link referance
-https://www.youtube.com/watch?v=XkVpb_8IPUM   2:21:00
+https://www.youtube.com/watch?v=XkVpb_8IPUM   
+
+Build React Project and host
+https://www.youtube.com/watch?v=cu419lg9zrw
 
 Docker Link
 https://github.com/jenkins-docs/simple-node-js-react-npm-app/blob/master/jenkins/Jenkinsfile
