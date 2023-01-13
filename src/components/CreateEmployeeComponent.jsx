@@ -82,7 +82,7 @@ class CreateEmployeeComponent extends Component {
                                     <div className="form-group">
                                         <label>First Name:</label>
                                         <input placeholder="First Name" name="firstName" className="form-control"
-                                        value={this.state.firstName} onChange={this.changeFirstNameHandler}/>
+                                        value={this.state.firstName} onChange={this.changeFirstNameHandler} required/>
                                     </div>
                                     <div className="form-group">
                                         <label>Last Name:</label>
@@ -92,7 +92,7 @@ class CreateEmployeeComponent extends Component {
                                     <div className="form-group">
                                         <label>Email:</label>
                                         <input placeholder="Email" name="emailId" className="form-control"
-                                        value={this.state.emailId} onChange={this.changeEamilIdHandler}/>
+                                        value={this.state.emailId} onChange={this.changeEamilIdHandler} required/>
                                     </div>
 
                                     <button className="btn btn-success" onClick={this.saveEmployee}>Save</button>
