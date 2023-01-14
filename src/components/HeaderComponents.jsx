@@ -6,7 +6,7 @@ class HeaderComponents extends Component {
             <div>
                 <header>
                     <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-                        <div><a href="http://192.168.1.46/">Employee Management App</a></div>
+                        <div><a href="http://98.15.45.185:9090/">Employee Management App</a></div>
                     </nav>
                 </header>
             </div>
