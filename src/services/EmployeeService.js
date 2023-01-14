@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 //const EMPLOYEE_API_BASE_URL="http://localhost:8081/rest-api-spring-2022-v1/api/v1/employees";
-const EMPLOYEE_API_BASE_URL="http://192.168.1.46:8082/api/v1/employees";
+const EMPLOYEE_API_BASE_URL="http://192.168.1.46:8081/Project-2-0.0.1-SNAPSHOT/api/v1/employees";
 
 class EmployeeSevice{
     getEmployees(){
