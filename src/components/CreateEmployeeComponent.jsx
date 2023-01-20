@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
+
 import EmployeeService from '../services/EmployeeService';
 
 class CreateEmployeeComponent extends Component {
     constructor(props){
         super(props)
-
+    
         this.state = {
             id: this.props.params.id,
             firstName: '',
@@ -14,7 +16,8 @@ class CreateEmployeeComponent extends Component {
         }
         this.changeFirstNameHandler = this.changeFirstNameHandler.bind(this);
         this.changeLastNameHandler = this.changeLastNameHandler.bind(this);
-        //this.saveEmployee = this.saveEmployee.bind(this);
+        this.changeEamilIdHandler = this.changeEamilIdHandler.bind(this);
+        this.saveEmployee = this.saveEmployee.bind(this);
 
         if(this.state.id === "-1"){
             return 
@@ -37,6 +40,7 @@ class CreateEmployeeComponent extends Component {
         let employee = {firstName: this.state.firstName, lastName: this.state.lastName, emailId: this.state.emailId};
         console.log('employee =>' + JSON.stringify(employee));
         
+        //validate(employee);
 
         if(this.state.id === "-1"){
             EmployeeService.createEmployee(employee).then(res =>{
@@ -48,6 +52,14 @@ class CreateEmployeeComponent extends Component {
            });
         }
     }
+
+    /*
+    //https://www.google.com/search?q=how+to+validate+in+react+js&sxsrf=AJOqlzX-P61MnOBMPPUcgpily_2zw4HvKw:1673824889983&source=lnms&tbm=vid&sa=X&ved=2ahUKEwiH8O7P28r8AhXyUjUKHem7CAwQ_AUoAXoECAEQAw&biw=1440&bih=605&dpr=1#fpstate=ive&vld=cid:04abcb9e,vid:EYpdEYK25Dc
+    validate(employee){
+        const errors = {};
+        return
+    }
+    */
 
     changeFirstNameHandler = (event) => {
         this.setState({firstName: event.target.value});
@@ -70,7 +82,7 @@ class CreateEmployeeComponent extends Component {
         }
     }
 
-    render() {
+    render() {          
         return (
             <div>
                 <div className="container">
@@ -78,7 +90,7 @@ class CreateEmployeeComponent extends Component {
                         <div className="card col-md-6 offset-md-3 offset-md-3">
                             {this.changeTitle()}
                             <div className="card-body">
-                                <form>
+                                <form onSubmit={this.saveEmployee}>
                                     <div className="form-group">
                                         <label>First Name:</label>
                                         <input placeholder="First Name" name="firstName" className="form-control"
@@ -91,11 +103,11 @@ class CreateEmployeeComponent extends Component {
                                     </div>
                                     <div className="form-group">
                                         <label>Email:</label>
-                                        <input placeholder="Email" name="emailId" className="form-control"
-                                        value={this.state.emailId} onChange={this.changeEamilIdHandler} required/>
+                                        <input placeholder="Email" name="emailId" className="form-control" 
+                                        value={this.state.emailId} onChange={this.changeEamilIdHandler} required/>                                 
                                     </div>
 
-                                    <button className="btn btn-success" onClick={this.saveEmployee}>Save</button>
+                                    <button className="btn btn-success">Save</button>
                                     <button className="btn btn-danger" onClick={() => {
                                         this.props.navigate('/employee')}} style={{marginLeft: "10px"}}>Cancel</button>
                                 </form>
@@ -109,16 +121,10 @@ class CreateEmployeeComponent extends Component {
 }
 
 export const myParams = (WrappedComponent) => (props) => {
+    const { register, handleSubmit, watch, formState} = useForm();
     const params = useParams();
     const navigate = useNavigate();
-    //return props => <WrappedComponent {...props} params={params} navigate={navigate} />;
     return <WrappedComponent {...props} params={params} navigate={navigate} />;
 }
-
-/*
-function myParams(Component) {
-    return props => <Component navHook={useNavigate()} />;
-}
-*/
 
 export default myParams(CreateEmployeeComponent);
