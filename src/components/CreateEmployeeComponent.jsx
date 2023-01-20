@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
-import { useForm } from "react-hook-form";
 
 import EmployeeService from '../services/EmployeeService';
 
@@ -121,7 +120,6 @@ class CreateEmployeeComponent extends Component {
 }
 
 export const myParams = (WrappedComponent) => (props) => {
-    const { register, handleSubmit, watch, formState} = useForm();
     const params = useParams();
     const navigate = useNavigate();
     return <WrappedComponent {...props} params={params} navigate={navigate} />;
